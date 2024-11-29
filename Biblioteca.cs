@@ -202,23 +202,29 @@ namespace Biblioteca
            // {
            //     Console.WriteLine("No se puede prestar porque el libro ya lo tiene un socio");
            // }
-           public void RepararLibro(int cod)
+           public void RepararLibro()
            {
+            bool mal = false; Ejemplar encontrado = null;
             for(int i = 0; i < listaEjemplares.Count; i++)
             {
                 Ejemplar e =(Ejemplar)listaEjemplares[i];
-                if(e.Condicion == "mala")
+                if(e.Condicion == "mala" && e.Estado == "disponible")
                 {
-                    Console.WriteLine($"Estos son los libros en mal estado: {e.Condicion}");
+                    mal = true;
+                    encontrado = e;
+                    break;
+                   
                 }
-                else
-                {
-                    Console.WriteLine("No hay libros en malas condiciones");
-                }
-                
             }
-   
-           }
+            if(mal == true)
+            {
+                encontrado.Condicion = "buena";
+                Console.WriteLine($"Se ha reparado el libro {encontrado.Titulo} perfectamente");
+            }
+            else
+            {
+                Console.WriteLine("No se encontro ningún libro en mal estado con ese código");
+            }}
         public string Nombre
         {
             get{
