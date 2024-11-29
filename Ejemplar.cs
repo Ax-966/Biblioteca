@@ -9,7 +9,7 @@ namespace Biblioteca
     {
         private int nEjemplar;
         
-        public Ejemplar(int codigo, string titulo, string autor, string editorial, string estado, string condicion, int nEjemplar):base(codigo, titulo, autor, editorial, estado, condicion)
+        public Ejemplar(int codigo, string titulo, string autor, string editorial,  string condicion, int nEjemplar):base(codigo, titulo, autor, editorial, condicion)
         {
             this.nEjemplar = nEjemplar;
         }

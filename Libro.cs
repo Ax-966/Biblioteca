@@ -17,13 +17,13 @@ namespace Biblioteca
         protected DateTime fechaDevolucion;
         protected string condicion;
 
-        public Libro(int codigo, string titulo, string autor, string editorial, string estado, string condicion)
+        public Libro(int codigo, string titulo, string autor, string editorial, string condicion)
         {
             this.codigo = codigo;
             this.titulo = titulo;
             this.autor = autor;
             this.editorial = editorial;
-            this.estado = estado;
+            this.estado = "disponible";
             this.nDni = 0;
             this.fechaPrestamo = DateTime.MinValue;
             this.fechaDevolucion = DateTime.MinValue;

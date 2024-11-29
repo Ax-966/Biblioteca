@@ -270,7 +270,7 @@ namespace Biblioteca
                 // >>>>>>>>>>>>>>> A G R E G A R  -  E J E M P L A R  <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
            //   Biblioteca B1 = new Biblioteca("Sara", "Quilmes");
-             int codigo, ejemplar; string titulo, autor, editorial, estado, condicion, respuestaL;
+             int codigo, ejemplar; string titulo, autor, editorial,  condicion, respuestaL;
     
 //          
             Console.WriteLine("¿Desea ingresar un Libro? (si/no)");
@@ -283,8 +283,6 @@ namespace Biblioteca
                 autor = Console.ReadLine();
                 Console.WriteLine("Editorial: ");
                 editorial = Console.ReadLine();
-                Console.WriteLine("Estado: ");
-                estado = Console.ReadLine();
                 Console.WriteLine("Condicion: ");
                 condicion = Console.ReadLine();
 
@@ -303,7 +301,7 @@ namespace Biblioteca
                             {
                                 Ejemplar E = (Ejemplar)B1.ListaEjemplares[B1.ListaEjemplares.Count - 1];
                                 ejemplar = E.NEjemplar + 1;
-                                Ejemplar NuevoEjemplar = new Ejemplar(cod, titulo, autor, editorial, estado,condicion, ejemplar);
+                                Ejemplar NuevoEjemplar = new Ejemplar(cod, titulo, autor, editorial, condicion, ejemplar);
                                 B1.AgregarLibro(NuevoEjemplar);
                                 Console.WriteLine("Se agrego un nuevo ejemplar");
                             }
@@ -318,7 +316,7 @@ namespace Biblioteca
                         Ejemplar lib = (Ejemplar)B1.ListaEjemplares[B1.ListaEjemplares.Count - 1];
                         codigo = lib.Codigo + 1;
                         ejemplar = 1;
-                        Ejemplar L1 = new Ejemplar(codigo, titulo, autor, editorial, estado, condicion, ejemplar);
+                        Ejemplar L1 = new Ejemplar(codigo, titulo, autor, editorial,  condicion, ejemplar);
                         B1.AgregarLibro(L1);
                         Console.WriteLine("Se agregó un nuevo libro.");
                     }
@@ -328,7 +326,7 @@ namespace Biblioteca
                     
                     codigo = 1;
                     ejemplar = 1;
-                    Ejemplar e1 = new Ejemplar(codigo, titulo, autor, editorial, estado, condicion, ejemplar);
+                    Ejemplar e1 = new Ejemplar(codigo, titulo, autor, editorial,  condicion, ejemplar);
                     B1.AgregarLibro(e1);
                     Console.WriteLine("Se agregó el primer libro.");
                 }
@@ -511,8 +509,43 @@ while (resD == "si")
     Console.WriteLine("desea devolver libro?");
     resD = Console.ReadLine();
     }
+            Console.WriteLine("Bienvenido al submenu:");
+            Console.WriteLine("1. Listado de Libros prestados");
+            Console.WriteLine("2. Prestar un libro");
+            Console.WriteLine("3. Reparar un libro");
+            Console.WriteLine("4. Salir");
+            int opcion = int.Parse(Console.ReadLine());
+
+            switch (opcion)
+            {
+                case 1:
+                if(B1.ListaSocios.Count > 0 )
+                {       for(int i = 0; i < B1.ListaSocios.Count; i++)
+                        {
+                             Socio socio =(Socio)B1.ListaSocios[i];
+                             if (socio.Historial != null && socio.Historial.Count > 0)
+                             {
+                                for(int j = 0; j < socio.Historial.Count; j++)
+                                {
+                                    Ejemplar prestados=(Ejemplar)socio.Historial[j];
+                                    Console.WriteLine($"Los libros prestados son: {prestados.Autor} + {prestados.Editorial}");
+                                }
+                             }
+                             else
+                             {
+                                Console.WriteLine("Todavía no hay libros prestados");
+                             }                           
+                        }
+                }
+                else
+                {
+                    Console.WriteLine("Todavía no hay libros prestados porque aún no hay socios");
+                }
+                break;
+                default:
+                break;
+            }
             
-            B1.RepararLibro();
         }
     }
 }
