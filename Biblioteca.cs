@@ -53,7 +53,7 @@ namespace Biblioteca
             {
                 throw new PrestamoException("El libro ya está prestado a otro socio.");
             }
-            if(lib.Estado == "reparacion" && lib.Condicion == "mala")
+            if(lib.Estado == "reparacion" || lib.Condicion == "mala")
             {
                 throw new PrestamoException("El libro esta en reparación o en malas condiciones");
             }
@@ -202,39 +202,23 @@ namespace Biblioteca
            // {
            //     Console.WriteLine("No se puede prestar porque el libro ya lo tiene un socio");
            // }
-        
-        public void RepararLibro()
-        {
-            bool malEstado = false;
+           public void RepararLibro(int cod)
+           {
             for(int i = 0; i < listaEjemplares.Count; i++)
             {
-                Ejemplar verEstado =(Ejemplar)listaEjemplares[i];
-                if( verEstado.Condicion == "mala" && verEstado.Estado == "disponible")
+                Ejemplar e =(Ejemplar)listaEjemplares[i];
+                if(e.Condicion == "mala")
                 {
-                    malEstado = true;
-                    Console.WriteLine("Estos son los libros que estan en mal estado y no tienen ningún socio: " + verEstado.Titulo + " Ejemplar: " + verEstado.NEjemplar);
-                    break;
+                    Console.WriteLine($"Estos son los libros en mal estado: {e.Condicion}");
                 }
-            }
-            if(malEstado == true)
-            {   int n;
-                for(int i = 0; i < listaEjemplares.Count; i++)
+                else
                 {
-                    Ejemplar reparar =(Ejemplar)listaEjemplares[i];
-                    Console.WriteLine("Elija el número de ejemplar que quiere arreglar: ");
-                    n = int.Parse(Console.ReadLine());
-                    if(reparar.NEjemplar == n)
-                    {
-                        reparar.Condicion = "Buena";
-                        break;
-                    }
+                    Console.WriteLine("No hay libros en malas condiciones");
                 }
+                
             }
-            else
-            {
-                Console.WriteLine("No se encontro ningún libro para reparar");
-            }
-        }
+   
+           }
         public string Nombre
         {
             get{

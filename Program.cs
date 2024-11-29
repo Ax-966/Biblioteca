@@ -510,8 +510,12 @@ while (resD == "si")
     }
     Console.WriteLine("desea devolver libro?");
     resD = Console.ReadLine();
-}
-            B1.RepararLibro();
+    }
+            int cReparar;
+            Console.WriteLine("Ingrese el número de código que desea reparar");
+            Console.ReadLine();
+            cReparar = int.Parse(Console.ReadLine());
+            B1.RepararLibro(cReparar);
         }
     }
 }

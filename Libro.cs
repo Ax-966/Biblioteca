@@ -27,6 +27,7 @@ namespace Biblioteca
             this.nDni = 0;
             this.fechaPrestamo = DateTime.MinValue;
             this.fechaDevolucion = DateTime.MinValue;
+            this.condicion = condicion;
         }
         public int Codigo
         {
