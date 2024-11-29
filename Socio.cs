@@ -9,12 +9,12 @@ namespace Biblioteca
     public class Socio
     {
         // Variables de instancia --> atributos de la instancia // carácteristicas.
-        private string nombreApellido;
-        private int dni;
-        private int telefono;
-        private string direccion;
-        private int cantLibros;
-        private ArrayList historial;
+        protected string nombreApellido;
+        protected int dni;
+        protected int telefono;
+        protected string direccion;
+        protected int cantLibros;
+        protected ArrayList historial;
 
         // Constructor --> Este método es importante, ya que, crea la instancia del objeto, con sus valores
         //                 es la famosa llamada al new - nombre de la clase- ();
@@ -27,15 +27,28 @@ namespace Biblioteca
             this.cantLibros = cantLibros;
             historial = new ArrayList();
         }
-         public virtual void DevolverLibro(Ejemplar registro)
-         {
-        // Lógica común para devolver un libro
-            registro.Estado = "disponible";
-            registro.FechaPrestamo = DateTime.MinValue;
-            registro.FechaDevolucion = DateTime.MinValue;
-            CantLibros--;
-            Console.WriteLine($"El libro {registro.Titulo} ha sido devuelto por {NombreApellido}.");
-         }
+        public virtual void DevolverLibro(Ejemplar registro)
+        {
+            DateTime fechaHoy = DateTime.Today;
+            if(fechaHoy > registro.FechaDevolucion)
+            {
+                cantLibros--;
+                registro.Estado = "disponible";
+                registro.FechaPrestamo = DateTime.MinValue;
+                registro.FechaDevolucion = DateTime.MinValue;
+                registro.NDni = 0;
+                Console.WriteLine($"Perfecto, el libro: {registro.Titulo} quedo con dni: {registro.NDni} y fechas: {registro.FechaPrestamo} y {registro.FechaDevolucion}");
+                Console.WriteLine($"El socio quedo con: {cantLibros} cantidad de libros");
+            }
+            else
+            {
+                int faltan = (registro.FechaDevolucion - fechaHoy).Days;
+                Console.WriteLine($"Todavía faltan: {faltan}, para devolver el libro");
+            }
+        }
+
+    // Si no se encuentra el libro
+
         
         // Propiedades --get --> lectura y set --valor--
         public string NombreApellido

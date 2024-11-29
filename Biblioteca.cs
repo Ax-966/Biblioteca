@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Intrinsics.X86;
 using System.Threading.Tasks;
 
 namespace Biblioteca
@@ -80,7 +81,7 @@ namespace Biblioteca
                     }
                 }
                
-            if(tieneFecha == false)
+            if(tieneFecha == false && res == "si")
             {
                 
                 
@@ -103,30 +104,27 @@ namespace Biblioteca
                     lib.NDni = s.Dni;
                     s.CantLibros++;
                     s.Historial.Add(lib);
-                    Console.Write("Esta son las salas: ");
-                    foreach(int sala in Salas)
+                    SocioLector lector =(SocioLector)s;
+                    if (lector.Sala == 0) // Si no tiene una sala asignada
                     {
-                        Console.WriteLine(sala);
-                    }
-                    Console.Write("Elija una sala: ");
-                    eleccion = int.Parse(Console.ReadLine());
-                    if(eleccion <= 5 && eleccion > 0)
-                    {
-                        SocioLector lector =(SocioLector)s;
-                        lector.Sala = eleccion;
-                        Console.WriteLine("Perfecto, su sala es: " + lector.Sala);
-                    }
-                }
-                 
-               
-                
-                
-            
-               
+                         Console.Write("Elija una sala del 1 al 5: ");
+                         eleccion = int.Parse(Console.ReadLine());
 
-               
-               
-            }
+                        if (eleccion > 0 && eleccion <= 5)
+                        {
+                            lector.Sala = eleccion;
+                            Console.WriteLine("Perfecto, su sala es: " + lector.Sala);
+                        }
+                        else
+                        {
+                            Console.WriteLine("Sala no válida. Se asignará automáticamente a la sala 1.");
+                            lector.Sala = 1; // Valor predeterminado si la entrada es inválida
+                        }
+                    }
+                    else
+                    {
+                      Console.WriteLine("Usted ya tiene una sala asignada: " + lector.Sala);
+                    }
         // Realizar el préstamo
             if(s.GetType() == typeof(Socio))
             {
@@ -142,10 +140,10 @@ namespace Biblioteca
                      Console.WriteLine($"Fecha inicial: {fp:yyyy-MM-dd}");
                      Console.WriteLine($"Fecha de devolución: {fd:yyyy-MM-dd}");
             }
-    
+            }}}
 
       
-        }
+            
 
          
          
@@ -205,9 +203,37 @@ namespace Biblioteca
            //     Console.WriteLine("No se puede prestar porque el libro ya lo tiene un socio");
            // }
         
-        public void DevolverLibro(Libro lib)
+        public void RepararLibro()
         {
-
+            bool malEstado = false;
+            for(int i = 0; i < listaEjemplares.Count; i++)
+            {
+                Ejemplar verEstado =(Ejemplar)listaEjemplares[i];
+                if( verEstado.Condicion == "mala" && verEstado.Estado == "disponible")
+                {
+                    malEstado = true;
+                    Console.WriteLine("Estos son los libros que estan en mal estado y no tienen ningún socio: " + verEstado.Titulo + " Ejemplar: " + verEstado.NEjemplar);
+                    break;
+                }
+            }
+            if(malEstado == true)
+            {   int n;
+                for(int i = 0; i < listaEjemplares.Count; i++)
+                {
+                    Ejemplar reparar =(Ejemplar)listaEjemplares[i];
+                    Console.WriteLine("Elija el número de ejemplar que quiere arreglar: ");
+                    n = int.Parse(Console.ReadLine());
+                    if(reparar.NEjemplar == n)
+                    {
+                        reparar.Condicion = "Buena";
+                        break;
+                    }
+                }
+            }
+            else
+            {
+                Console.WriteLine("No se encontro ningún libro para reparar");
+            }
         }
         public string Nombre
         {

@@ -38,6 +38,7 @@ namespace Biblioteca
 //
 //
             Biblioteca B1 = new Biblioteca("Sara", "Quilmes");
+
           
             //       >>>>>>>>>  A G R E G A R  -  S O C I O  <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
@@ -479,37 +480,41 @@ namespace Biblioteca
          string resD;
         bool existePrestado = false;
         int codDevolver;
-        Console.WriteLine("desea devolver libro?");
-        resD = Console.ReadLine();
-        while (resD == "si")
-        {
-            for (int i = 0; i < B1.ListaSocios.Count; i++)
+       Console.WriteLine("desea devolver libro?");
+       resD = Console.ReadLine();
+
+while (resD == "si")
+{
+    Console.WriteLine("Ingrese el código del libro");
+    codDevolver = int.Parse(Console.ReadLine());
+    
+
+    for (int i = 0; i < B1.ListaSocios.Count; i++)
+    {
+        Socio s = (Socio)B1.ListaSocios[i]; // Puede ser Socio o SocioLector
+        Ejemplar registro = (Ejemplar)s.Historial[i];
+
+         if (registro.Codigo == codDevolver)
+         {
+            int e;
+            Console.WriteLine("Ingrese el número del ejemplar");
+            e = int.Parse(Console.ReadLine());
+
+            if (registro.NEjemplar == e)
             {
-                Socio s = (Socio)B1.ListaSocios[i];
-                Ejemplar registro = (Ejemplar)s.Historial[i];
-                Console.WriteLine("Ingrese el codigo del libro");
-                codDevolver = int.Parse(Console.ReadLine());
-                if (registro.Codigo == codDevolver)
-                {
-                    int e;
-                    Console.WriteLine("Ingrese el número del ejemplar");
-                    e = int.Parse(Console.ReadLine());
-                    if (registro.NEjemplar == e)
-                    {
-                        if (registro.Estado == "prestado")
-                        {
-                            s.DevolverLibro(registro); // Llama al método de devolución
-                            break;
-                        }
-                    }
-                }
-            }
-             Console.WriteLine("desea devolver libro?");
-             resD = Console.ReadLine();
-            }
-                }
+                Console.WriteLine($"El ejemplar está asociado al socio cuyo DNI es: {registro.NDni}");
+                s.DevolverLibro(registro); // Llama al método de la clase específica (Socio o SocioLector)
+                break;
             }
         }
+    }
+    Console.WriteLine("desea devolver libro?");
+    resD = Console.ReadLine();
+}
+            B1.RepararLibro();
+        }
+    }
+}
         
         
         
