@@ -511,8 +511,8 @@ while (resD == "si")
     }
             Console.WriteLine("Bienvenido al submenu:");
             Console.WriteLine("1. Listado de Libros prestados");
-            Console.WriteLine("2. Prestar un libro");
-            Console.WriteLine("3. Reparar un libro");
+            Console.WriteLine("2. Ver libros de la Biblioteca");
+            Console.WriteLine("3. Ver la lista de socios");
             Console.WriteLine("4. Salir");
             int opcion = int.Parse(Console.ReadLine());
 
@@ -541,6 +541,34 @@ while (resD == "si")
                 {
                     Console.WriteLine("Todavía no hay libros prestados porque aún no hay socios");
                 }
+                break;
+                case 2:
+                        if(B1.ListaEjemplares.Count > 0)
+                        {
+                            for(int i = 0; i < B1.ListaEjemplares.Count; i++)
+                            {
+                                Ejemplar e = (Ejemplar)B1.ListaEjemplares[i];
+                                Console.WriteLine($"Estos son los libros de la biblioteca: {e.Titulo}, {e.Autor}");
+                            }
+                        }
+                        else
+                        {
+                            Console.WriteLine("No hay ningun libro en la biblioteca");
+                        }
+                break;
+                case 3:
+                       if(B1.ListaSocios.Count > 0)
+                        {
+                            for(int i = 0; i < B1.ListaSocios.Count; i++)
+                            {
+                                Socio s = (Socio)B1.ListaSocios[i];
+                                Console.WriteLine($"Estos son los socios, DNI: {s.Dni},  Nombre y Apellido: {s.NombreApellido}");
+                            }
+                        }
+                        else
+                        {
+                            Console.WriteLine("No hay socios");
+                        }
                 break;
                 default:
                 break;
