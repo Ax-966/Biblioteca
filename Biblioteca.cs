@@ -64,22 +64,26 @@ namespace Biblioteca
             }
             if(s.GetType() == typeof(SocioLector))
             {
-                for(int i = 0; i < s.Historial.Count; i++)
-                {
-                    Ejemplar registro =(Ejemplar)s.Historial[i];
-                    if (registro.FechaPrestamo != DateTime.MinValue && registro.FechaPrestamo != DateTime.MaxValue && registro.FechaDevolucion != DateTime.MinValue && registro.FechaDevolucion != DateTime.MaxValue)
-                    {
-                        tieneFecha = true;
-                        Console.WriteLine("No se puede llevar el libro, solo leer aquí");
-                        break;
-                    }
-                }
-            if(tieneFecha == false)
-            {
                 Console.WriteLine("Desea llevarlo a su casa");
                 res = Console.ReadLine(); 
                 if(res == "si")
                 {
+                     for(int i = 0; i < s.Historial.Count; i++)
+                     {
+                        Ejemplar registro =(Ejemplar)s.Historial[i];
+                        if (registro.FechaPrestamo != DateTime.MinValue && registro.FechaPrestamo != DateTime.MaxValue && registro.FechaDevolucion != DateTime.MinValue && registro.FechaDevolucion != DateTime.MaxValue)
+                        {
+                            tieneFecha = true;
+                            Console.WriteLine("No se puede llevar el libro, solo leer aquí");
+                            break;
+                        }
+                    }
+                }
+               
+            if(tieneFecha == false)
+            {
+                
+                
                     lib.NDni = s.Dni;
                     lib.Estado = "prestado";
                     s.CantLibros = s.CantLibros + 1;
@@ -91,7 +95,7 @@ namespace Biblioteca
                     Console.WriteLine($"Título del libro: {lib.Titulo}");
                     Console.WriteLine($"Fecha inicial: {fp:yyyy-MM-dd}");
                     Console.WriteLine($"Fecha de devolución: {fd:yyyy-MM-dd}");
-                }
+                
             }   
             else
             {

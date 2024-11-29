@@ -475,6 +475,41 @@ namespace Biblioteca
                 resV = Console.ReadLine();
             }
         
+        // >>>>>>>>>>>>> D E V O L V E R -  L I B R O <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+         string resD;
+        bool existePrestado = false;
+        int codDevolver;
+        Console.WriteLine("desea devolver libro?");
+        resD = Console.ReadLine();
+        while (resD == "si")
+        {
+            for (int i = 0; i < B1.ListaSocios.Count; i++)
+            {
+                Socio s = (Socio)B1.ListaSocios[i];
+                Ejemplar registro = (Ejemplar)s.Historial[i];
+                Console.WriteLine("Ingrese el codigo del libro");
+                codDevolver = int.Parse(Console.ReadLine());
+                if (registro.Codigo == codDevolver)
+                {
+                    int e;
+                    Console.WriteLine("Ingrese el número del ejemplar");
+                    e = int.Parse(Console.ReadLine());
+                    if (registro.NEjemplar == e)
+                    {
+                        if (registro.Estado == "prestado")
+                        {
+                            s.DevolverLibro(registro); // Llama al método de devolución
+                            break;
+                        }
+                    }
+                }
+            }
+             Console.WriteLine("desea devolver libro?");
+             resD = Console.ReadLine();
+            }
+                }
+            }
+        }
         
         
         
@@ -490,11 +525,3 @@ namespace Biblioteca
         
         
         
-        
-        
-        
-        
-        }  
-    }//
-}//
-//

@@ -27,6 +27,16 @@ namespace Biblioteca
             this.cantLibros = cantLibros;
             historial = new ArrayList();
         }
+         public virtual void DevolverLibro(Ejemplar registro)
+         {
+        // Lógica común para devolver un libro
+            registro.Estado = "disponible";
+            registro.FechaPrestamo = DateTime.MinValue;
+            registro.FechaDevolucion = DateTime.MinValue;
+            CantLibros--;
+            Console.WriteLine($"El libro {registro.Titulo} ha sido devuelto por {NombreApellido}.");
+         }
+        
         // Propiedades --get --> lectura y set --valor--
         public string NombreApellido
         {
