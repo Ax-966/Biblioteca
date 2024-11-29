@@ -86,7 +86,8 @@ namespace Biblioteca
                     leer = Console.ReadLine();
                     if (leer == "si")
                     {
-                        SocioLector sl = new SocioLector(nombreApellido, dni, telefono, direccion, cantLibros);
+                        int s = 0;
+                        SocioLector sl = new SocioLector(nombreApellido, dni, telefono, direccion, cantLibros, s);
                         B1.AgregarSocio(sl);
                     }
                     else
@@ -353,10 +354,12 @@ namespace Biblioteca
             respuestaL = Console.ReadLine();
             while (respuestaL == "si")
             {
-                Console.WriteLine("¿Qué número de ejemplar desea eliminar?");
-                int eleccion = int.Parse(Console.ReadLine());
                 Console.WriteLine("Ingrese el código");
                 int cod = int.Parse(Console.ReadLine());
+
+                Console.WriteLine("¿Qué número de ejemplar desea eliminar?");
+                int eleccion = int.Parse(Console.ReadLine());
+               
 
                 bool libroEncontrado = false; // Indicador de que se encontró el libro
 

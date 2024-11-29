@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/brosoft/Imágenes/super copia de Biblioteca/Biblioteca.csproj",
+      "projectUniqueName": "/home/brosoft/Imágenes/Biblioteca-BackUp/Biblioteca.csproj",
       "projectName": "Biblioteca",
-      "projectPath": "/home/brosoft/Imágenes/super copia de Biblioteca/Biblioteca.csproj",
+      "projectPath": "/home/brosoft/Imágenes/Biblioteca-BackUp/Biblioteca.csproj",
       "packagesPath": "/home/brosoft/.nuget/packages/",
-      "outputPath": "/home/brosoft/Imágenes/super copia de Biblioteca/obj/",
+      "outputPath": "/home/brosoft/Imágenes/Biblioteca-BackUp/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/home/brosoft/.nuget/NuGet/NuGet.Config"

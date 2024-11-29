@@ -41,3 +41,18 @@
 /home/brosoft/Imágenes/super copia de Biblioteca/obj/Debug/net8.0/Biblioteca.pdb
 /home/brosoft/Imágenes/super copia de Biblioteca/obj/Debug/net8.0/Biblioteca.genruntimeconfig.cache
 /home/brosoft/Imágenes/super copia de Biblioteca/obj/Debug/net8.0/ref/Biblioteca.dll
+/home/brosoft/Imágenes/Biblioteca-BackUp/obj/Debug/net8.0/Biblioteca.GeneratedMSBuildEditorConfig.editorconfig
+/home/brosoft/Imágenes/Biblioteca-BackUp/obj/Debug/net8.0/Biblioteca.AssemblyInfoInputs.cache
+/home/brosoft/Imágenes/Biblioteca-BackUp/obj/Debug/net8.0/Biblioteca.AssemblyInfo.cs
+/home/brosoft/Imágenes/Biblioteca-BackUp/obj/Debug/net8.0/Biblioteca.csproj.CoreCompileInputs.cache
+/home/brosoft/Imágenes/Biblioteca-BackUp/obj/Debug/net8.0/Biblioteca.sourcelink.json
+/home/brosoft/Imágenes/Biblioteca-BackUp/obj/Debug/net8.0/Biblioteca.dll
+/home/brosoft/Imágenes/Biblioteca-BackUp/obj/Debug/net8.0/refint/Biblioteca.dll
+/home/brosoft/Imágenes/Biblioteca-BackUp/obj/Debug/net8.0/Biblioteca.pdb
+/home/brosoft/Imágenes/Biblioteca-BackUp/bin/Debug/net8.0/Biblioteca
+/home/brosoft/Imágenes/Biblioteca-BackUp/bin/Debug/net8.0/Biblioteca.deps.json
+/home/brosoft/Imágenes/Biblioteca-BackUp/bin/Debug/net8.0/Biblioteca.runtimeconfig.json
+/home/brosoft/Imágenes/Biblioteca-BackUp/bin/Debug/net8.0/Biblioteca.dll
+/home/brosoft/Imágenes/Biblioteca-BackUp/bin/Debug/net8.0/Biblioteca.pdb
+/home/brosoft/Imágenes/Biblioteca-BackUp/obj/Debug/net8.0/Biblioteca.genruntimeconfig.cache
+/home/brosoft/Imágenes/Biblioteca-BackUp/obj/Debug/net8.0/ref/Biblioteca.dll

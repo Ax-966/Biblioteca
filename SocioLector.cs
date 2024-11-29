@@ -8,17 +8,23 @@ namespace Biblioteca
 {
     public class SocioLector:Socio
     {
-        private ArrayList sala;
+        private int sala;
 
-        public SocioLector(string nombreApellido, int dni, int telefono, string direccion, int cantLibros):base(nombreApellido, dni, telefono, direccion, cantLibros)
+
+        public SocioLector(string nombreApellido, int dni, int telefono, string direccion, int cantLibros, int sala):base(nombreApellido, dni, telefono, direccion, cantLibros)
         {
-            sala = new ArrayList();
+            this.sala = 0;
+      
         }
-        public ArrayList Sala
+        public int Sala
         {
             get
             {
                 return sala;
+            }
+            set
+            {
+                sala = value;
             }
         }
         

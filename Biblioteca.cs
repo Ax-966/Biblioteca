@@ -13,6 +13,7 @@ namespace Biblioteca
         private ArrayList listaSocios;
         private ArrayList listaEjemplares;
         private ArrayList librosReparacion;
+        private int [] salas;
         
         public Biblioteca(string nombre, string direccion)
         {
@@ -21,6 +22,7 @@ namespace Biblioteca
             listaSocios = new ArrayList();
             listaEjemplares = new ArrayList();
             librosReparacion = new ArrayList();
+            salas = new int[]{1,2,3,4,5};
         }
         public void AgregarLibro(Libro libro)
         {
@@ -42,22 +44,85 @@ namespace Biblioteca
         {
             DateTime fp = DateTime.Today;
             DateTime fd = fp.AddDays(15);
-         
+            string res;
+            bool tieneFecha = false;
+            
+        
             if (lib.NDni != 0 && lib.Estado == "prestado")
             {
                 throw new PrestamoException("El libro ya está prestado a otro socio.");
             }
-            if(lib.Estado == "reparacion")
+            if(lib.Estado == "reparacion" && lib.Condicion == "mala")
             {
-                throw new PrestamoException("El libro esta en reparación");
+                throw new PrestamoException("El libro esta en reparación o en malas condiciones");
             }
 
-            // Validar si el socio ya tiene otro libro en préstamo
-            if (s.CantLibros > 0)
+         
+            if (s.CantLibros > 0 && s.GetType() == typeof(Socio))
             {
                 throw new PrestamoException("El socio ya tiene otro libro en préstamo.");
             }
+            if(s.GetType() == typeof(SocioLector))
+            {
+                for(int i = 0; i < s.Historial.Count; i++)
+                {
+                    Ejemplar registro =(Ejemplar)s.Historial[i];
+                    if (registro.FechaPrestamo != DateTime.MinValue && registro.FechaPrestamo != DateTime.MaxValue && registro.FechaDevolucion != DateTime.MinValue && registro.FechaDevolucion != DateTime.MaxValue)
+                    {
+                        tieneFecha = true;
+                        Console.WriteLine("No se puede llevar el libro, solo leer aquí");
+                        break;
+                    }
+                }
+            if(tieneFecha == false)
+            {
+                Console.WriteLine("Desea llevarlo a su casa");
+                res = Console.ReadLine(); 
+                if(res == "si")
+                {
+                    lib.NDni = s.Dni;
+                    lib.Estado = "prestado";
+                    s.CantLibros = s.CantLibros + 1;
+                    lib.FechaPrestamo = fp;
+                    lib.FechaDevolucion = fd;
+                    s.Historial.Add(lib);
+                    Console.WriteLine("Se agrego el libro al socio");
+                    Console.WriteLine($"Préstamo realizado con éxito:");
+                    Console.WriteLine($"Título del libro: {lib.Titulo}");
+                    Console.WriteLine($"Fecha inicial: {fp:yyyy-MM-dd}");
+                    Console.WriteLine($"Fecha de devolución: {fd:yyyy-MM-dd}");
+                }
+            }   
+            else
+            {
+                    int eleccion;
+                    lib.NDni = s.Dni;
+                    s.CantLibros++;
+                    s.Historial.Add(lib);
+                    Console.Write("Esta son las salas: ");
+                    foreach(int sala in Salas)
+                    {
+                        Console.WriteLine(sala);
+                    }
+                    Console.Write("Elija una sala: ");
+                    eleccion = int.Parse(Console.ReadLine());
+                    if(eleccion <= 5 && eleccion > 0)
+                    {
+                        SocioLector lector =(SocioLector)s;
+                        lector.Sala = eleccion;
+                        Console.WriteLine("Perfecto, su sala es: " + lector.Sala);
+                    }
+                }
+                 
+               
+                
+                
+            
+               
 
+               
+               
+            }
         // Realizar el préstamo
             if(s.GetType() == typeof(Socio))
             {
@@ -67,19 +132,13 @@ namespace Biblioteca
                 lib.FechaPrestamo = fp;
                 lib.FechaDevolucion = fd;
                 s.Historial.Add(lib);
-                Console.WriteLine("Se agrego los libros al socio");
+                Console.WriteLine("Se agrego el libro al socio");
                      Console.WriteLine($"Préstamo realizado con éxito:");
                     Console.WriteLine($"Título del libro: {lib.Titulo}");
                      Console.WriteLine($"Fecha inicial: {fp:yyyy-MM-dd}");
                      Console.WriteLine($"Fecha de devolución: {fd:yyyy-MM-dd}");
             }
-            else{
-                lib.NDni = s.Dni;
-                s.CantLibros++;
-                s.Historial.Add(lib);
-                Console.WriteLine("El socio lector puede agregar todos los libros que quiera");
-            }
-            
+    
 
       
         }
@@ -189,6 +248,12 @@ namespace Biblioteca
                    librosReparacion = value;
             }
         }
-        
+        public int []Salas
+        {
+            get
+            {
+                return salas;
+            }
+        }
     }
 }
