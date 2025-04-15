@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections;
 using System.Runtime.Intrinsics.X86;
+using System.Text.RegularExpressions;
+
 
 namespace Biblioteca
 {
@@ -8,153 +10,170 @@ namespace Biblioteca
     {
         public static void Main(string[] args)
         {
-                // >>>>>>>>> PRUEBA DATETIME <<<<<<<<<<<<<<<<
-
-            //    DateTime fp = new DateTime(2024, 11, 27); 
-            //    DateTime fd = new DateTime(2024, 11, 10); 
-//
-           //
-            //    int diasRestantes = (fd - fp).Days;
-//
-            //    if (diasRestantes > 0)
-            //    {
-            //        Console.WriteLine($"Faltan {diasRestantes} días para llegar a la fecha límite.");
-            //    }
-            //    else
-            //    {
-            //        Console.WriteLine("La fecha límite ya ha pasado o es hoy.");
-            //    }
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
             Biblioteca B1 = new Biblioteca("Sara", "Quilmes");
-
-          
-            //       >>>>>>>>>  A G R E G A R  -  S O C I O  <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-
-            string nombreApellido, direccion, respuestaS, leer; int dni, telefono, cantLibros;
-              
-            Console.WriteLine("¿Desea agregar a un socio?");
-            respuestaS = Console.ReadLine();
-            
-            while(respuestaS == "si")
+            int option;
+            do
             {
-                Console.WriteLine("Ingrese su nombre y apellido: ");
-                nombreApellido = Console.ReadLine();
-                Console.WriteLine("Ingrese el DNI: ");
-                dni = int.Parse(Console.ReadLine());
-                Console.WriteLine("Ingrese su télefono: ");
-                telefono = int.Parse(Console.ReadLine());
-                Console.WriteLine("Ingrese su dirección: ");
-                direccion = Console.ReadLine();
-                
-                 bool existeSocio = false;
-                if (B1.ListaSocios != null && B1.ListaSocios.Count > 0)
+                MostrarMenu();
+                if (int.TryParse(Console.ReadLine(), out option))
                 {
-                    for (int i = 0; i < B1.ListaSocios.Count; i++)
+                    switch (option)
                     {
-                        Socio socio = (Socio)B1.ListaSocios[i];
-                        if (socio.Dni == dni)
-                        {
-                            existeSocio = true;
-                            Console.WriteLine("El socio ya existe");
-                            break;
-                        }
-                    }
-                }
+                        case 1:
+                            string nombreApellido, direccion, leer, dni, telefono; int cantLibros;
+                            string respuestaSocio = "si";
+              
+                            while(respuestaSocio.ToLower() == "si")
+                            {
+                               
+                                nombreApellido = InputHelper.PedirTextoValido("Ingrese su nombre y apellido:", EsNombreValido);
+                                dni =  InputHelper.PedirTextoValido("Ingrese su DNI:", x => EsNumeroValido(x, 7, 8));
+                                telefono = InputHelper.PedirTextoValido("Ingrese un télefono:", x =>EsNumeroValido(x, 10));
+                                direccion = InputHelper.PedirTextoValido("Ingrese una dirección:",EsTextoLibreValido);
+                
+                                bool existeSocio = false;
+                                if (B1.ListaSocios != null && B1.ListaSocios.Count > 0)
+                                {
+                                    for (int i = 0; i < B1.ListaSocios.Count; i++)
+                                    {
+                                        Socio socio = (Socio)B1.ListaSocios[i];
+                                        if (socio.Dni == dni)
+                                        {
+                                            existeSocio = true;
+                                            Console.WriteLine("El socio ya existe");
+                                            break;
+                                        }
+                                    }
+                                }
+                                if (existeSocio)
+                                {
+                                    Console.WriteLine("¿Desea agregar otro socio?");
+                                    respuestaSocio = Console.ReadLine();
+                                }
+                                else
+                                {
+                                    cantLibros = 0;
+                                    Console.WriteLine($"¿Desea leer dentro de: {B1.Nombre}  también?");
+                                    leer = Console.ReadLine();
+                                   
+                                    if (leer.ToLower() == "si")
+                                    {
+                                        int s = 0;
+                                        SocioLector sl = new SocioLector(nombreApellido, dni, telefono, direccion, cantLibros, s);
+                                        B1.AgregarSocio(sl);
+                                    }
+                                    else
+                                    {
+                                        Socio s = new Socio(nombreApellido, dni, telefono, direccion, cantLibros);
+                                        B1.AgregarSocio(s);
+                                    }
 
-                // Si el socio ya existe, preguntar si desea agregar otro y evitar más lógica
-                if (existeSocio)
-                {
-                    Console.WriteLine("¿Desea agregar otro socio?");
-                    respuestaS = Console.ReadLine();
+                                    Console.WriteLine("¿Desea agregar otro socio?");
+                                    respuestaSocio = Console.ReadLine();
+                                }
+                            }
+                            for(int i = 0; i < B1.ListaSocios.Count; i++)
+                            {
+                                Socio s =(Socio)B1.ListaSocios[i];
+                                Console.WriteLine("Nombre y apellido: " + s.NombreApellido + "DNI: " + s.Dni);
+                            }
+                            break;
+                        case 2:
+                            string eliminarSocio = "si";
+                            while(eliminarSocio.ToLower() == "si")
+                            {
+                                Console.WriteLine("Ingrese su dni: ");
+                                string dn = Console.ReadLine();
+                                bool asociado = false;
+                                bool asociadoAlibro = false;
+                                Socio s = null;
+                
+                                for(int i = 0; i < B1.ListaSocios.Count; i++)
+                                {
+                                    s =(Socio)B1.ListaSocios[i];
+                                    if(s.Dni == dn)
+                                    {
+                                        asociado = true;
+                                        for(int j = 0; i < B1.ListaEjemplares.Count; j++)
+                                        {
+                                            Ejemplar e =(Ejemplar)B1.ListaEjemplares[j];
+                                            if(e.NDni == dn)
+                                            {
+                                                asociadoAlibro = true;
+                                                break;
+                
+                                            }
+                                        }
+                                    }
+                                }
+                                if(asociado == true && asociadoAlibro == false)
+                                {
+                                    B1.DarDeBaja(s);
+                                    Console.WriteLine("Se elimino correctamente");
+                                    
+                                }
+                                else if(asociadoAlibro)
+                                {
+                                    Console.WriteLine("Se encontró al socio con ese dni, pero no se puede eliminar porque tiene un libro prestado je");
+                                   
+                                }
+                                else
+                                {
+                                    Console.WriteLine("No se encontró ese dni asociado a ningún socio.");
+                                }
+                                        
+                                    
+                                  
+                                
+                                Console.WriteLine("¿Desea eliminar un socio?");
+                                eliminarSocio = Console.ReadLine();
+                            }
+                            for(int i = 0; i < B1.ListaSocios.Count; i++)
+                            {
+                                Socio s =(Socio)B1.ListaSocios[i];
+                                Console.WriteLine("Nombre y apellido del socio eliminado: " + s.NombreApellido + "DNI: " + s.Dni);
+                            }
+                            break;
+                        case 3:
+                           
+                            break;
+                        case 4:
+                            
+                            break;
+                        case 5:
+                            
+                            break;
+                         case 6:
+                            
+                            break;
+                         case 7:
+                            
+                            break;
+                         case 8:
+                            Console.WriteLine("Saliendo...");
+                            break;
+                        default:
+                            Console.WriteLine("Opción inválida.");
+                            break;
+                    }
                 }
                 else
                 {
-                    // Si el socio no existe, proceder a agregarlo
-                    cantLibros = 0;
-                    Console.WriteLine("¿Desea leer dentro de: " + B1.Nombre + " también?");
-                    leer = Console.ReadLine();
-                    if (leer == "si")
-                    {
-                        int s = 0;
-                        SocioLector sl = new SocioLector(nombreApellido, dni, telefono, direccion, cantLibros, s);
-                        B1.AgregarSocio(sl);
-                    }
-                    else
-                    {
-                        Socio s = new Socio(nombreApellido, dni, telefono, direccion, cantLibros);
-                        B1.AgregarSocio(s);
-                    }
-
-                    Console.WriteLine("¿Desea agregar otro socio?");
-                    respuestaS = Console.ReadLine();
+                    Console.WriteLine("Opción inválida. Debe ingresar un número.");
                 }
-            }
-            for(int i = 0; i < B1.ListaSocios.Count; i++)
-            {
-                Socio s =(Socio)B1.ListaSocios[i];
-                Console.WriteLine("Nombre y apellido: " + s.NombreApellido + "DNI: " + s.Dni);
-            }
-//          
+
+                Console.WriteLine(); // Espacio para mejorar la legibilidad
+            } while (option != 8);
+
+            
+
+            
             // >>>>>>>>>>>>>>>>>>> E L I M I N A R  -  S O C I O <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
-            Console.WriteLine("¿Desea eliminar a un socio?");
-            respuestaS = Console.ReadLine();
             
-            while(respuestaS == "si")
-            {
-                Console.WriteLine("Ingrese su dni: ");
-                int dn = int.Parse(Console.ReadLine());
-                bool asociado = false;
-
-                for(int i = 0; i < B1.ListaSocios.Count; i++)
-                {
-                    Socio s =(Socio)B1.ListaSocios[i];
-                    if(s.Dni == dn)
-                    {
-                        for(int j = 0; i < B1.ListaEjemplares.Count; j++)
-                        {
-                            Ejemplar e =(Ejemplar)B1.ListaEjemplares[j];
-                            if(e.NDni == dn)
-                            {
-                                asociado = true;
-                                Console.WriteLine("No se puede eliminar, tiene libros prestados");
-                                break;
-
-                            }
-                        }
-                        if(asociado)
-                        {
-                            Console.WriteLine("¿Desea eliminar un socio?");
-                            respuestaS = Console.ReadLine();
-                        }
-                        else
-                        {
-                            B1.DarDeBaja(s);
-                            Console.WriteLine("Se elimino correctamente");
-                            Console.WriteLine("¿Desea eliminar un socio?");
-                            respuestaS = Console.ReadLine();
-                        }
-                        
-                    }
-                }
-            }
-             for(int i = 0; i < B1.ListaSocios.Count; i++)
-            {
-                Socio s =(Socio)B1.ListaSocios[i];
-                Console.WriteLine("Nombre y apellido: " + s.NombreApellido + "DNI: " + s.Dni);
-            }
+           
+            
+           
 
 
 //
@@ -275,7 +294,7 @@ namespace Biblioteca
 //          
             Console.WriteLine("¿Desea ingresar un Libro? (si/no)");
             respuestaL = Console.ReadLine();
-            while (respuestaL == "si")
+            while (respuestaL.ToLower() == "si")
             {
                 Console.WriteLine("Titulo: ");
                 titulo = Console.ReadLine();
@@ -407,21 +426,21 @@ namespace Biblioteca
             }
             // >>>>>>>>>>>< P R E S T A R  -  L I B R O  <<<<<<<<<<<<<<<<<<<<<<<<<
         
-            int ds, c; string  resV;
+             string c, ds, resV;
 
            
             
             Console.WriteLine("¿Desea pedir un libro?");
             resV = Console.ReadLine();
-            while(resV == "si")
+            while(resV.ToLower() == "si")
             {
-                 Console.WriteLine("Ingrese el Dni del socio: ");
-                 ds = int.Parse(Console.ReadLine());
-                 Console.WriteLine("Ingrese el titulo del libro");
-                 c = int.Parse(Console.ReadLine());
-                 bool existeSocio = false; bool existeEjemplar = false;
-                 Socio socioEncontrado = null; 
-                 Ejemplar ejemplarEncontrado = null;
+                Console.WriteLine("Ingrese el Dni del socio: ");
+                ds = Console.ReadLine();
+                Console.WriteLine("Ingrese el titulo del libro");
+                c = Console.ReadLine();
+                bool existeSocio = false; bool existeEjemplar = false;
+                Socio socioEncontrado = null; 
+                Ejemplar ejemplarEncontrado = null;
                 for(int i = 0; i < B1.ListaSocios.Count; i++)
                 {
                     Socio socio =(Socio)B1.ListaSocios[i];
@@ -435,7 +454,7 @@ namespace Biblioteca
                 for(int j = 0; j < B1.ListaEjemplares.Count; j++)
                 {
                     Ejemplar e =(Ejemplar)B1.ListaEjemplares[j];
-                    if(e.Codigo == c)
+                    if(e.Titulo == c)
                     {
                         existeEjemplar = true;
                         if(e.Estado == "disponible")
@@ -478,8 +497,8 @@ namespace Biblioteca
          string resD;
         bool existePrestado = false;
         int codDevolver;
-       Console.WriteLine("desea devolver libro?");
-       resD = Console.ReadLine();
+        Console.WriteLine("desea devolver libro?");
+        resD = Console.ReadLine();
 
 while (resD == "si")
 {
@@ -490,92 +509,60 @@ while (resD == "si")
     for (int i = 0; i < B1.ListaSocios.Count; i++)
     {
         Socio s = (Socio)B1.ListaSocios[i]; // Puede ser Socio o SocioLector
-        Ejemplar registro = (Ejemplar)s.Historial[i];
+        for(int j = 0; j < s.Historial.Count; j++)
+        {
+            Ejemplar registro = (Ejemplar)s.Historial[i];
 
-         if (registro.Codigo == codDevolver)
-         {
-            int e;
-            Console.WriteLine("Ingrese el número del ejemplar");
-            e = int.Parse(Console.ReadLine());
-
-            if (registro.NEjemplar == e)
-            {
-                Console.WriteLine($"El ejemplar está asociado al socio cuyo DNI es: {registro.NDni}");
-                s.DevolverLibro(registro); // Llama al método de la clase específica (Socio o SocioLector)
-                break;
-            }
+            if (registro.Codigo == codDevolver)
+             {
+                int e;
+                Console.WriteLine("Ingrese el número del ejemplar");
+                e = int.Parse(Console.ReadLine());
+    
+                if (registro.NEjemplar == e)
+                {
+                    Console.WriteLine($"El ejemplar está asociado al socio cuyo DNI es: {registro.NDni}");
+                    s.DevolverLibro(registro); // Llama al método de la clase específica (Socio o SocioLector)
+                    break;
+                }
+            }    
         }
     }
     Console.WriteLine("desea devolver libro?");
     resD = Console.ReadLine();
-    }
-            Console.WriteLine("Bienvenido al submenu:");
-            Console.WriteLine("1. Listado de Libros prestados");
-            Console.WriteLine("2. Ver libros de la Biblioteca");
-            Console.WriteLine("3. Ver la lista de socios");
-            Console.WriteLine("4. Salir");
-            int opcion = int.Parse(Console.ReadLine());
-
-            switch (opcion)
-            {
-                case 1:
-                if(B1.ListaSocios.Count > 0 )
-                {       for(int i = 0; i < B1.ListaSocios.Count; i++)
-                        {
-                             Socio socio =(Socio)B1.ListaSocios[i];
-                             if (socio.Historial != null && socio.Historial.Count > 0)
-                             {
-                                for(int j = 0; j < socio.Historial.Count; j++)
-                                {
-                                    Ejemplar prestados=(Ejemplar)socio.Historial[j];
-                                    Console.WriteLine($"Los libros prestados son: {prestados.Autor} + {prestados.Editorial}");
-                                }
-                             }
-                             else
-                             {
-                                Console.WriteLine("Todavía no hay libros prestados");
-                             }                           
-                        }
-                }
-                else
-                {
-                    Console.WriteLine("Todavía no hay libros prestados porque aún no hay socios");
-                }
-                break;
-                case 2:
-                        if(B1.ListaEjemplares.Count > 0)
-                        {
-                            for(int i = 0; i < B1.ListaEjemplares.Count; i++)
-                            {
-                                Ejemplar e = (Ejemplar)B1.ListaEjemplares[i];
-                                Console.WriteLine($"Estos son los libros de la biblioteca: {e.Titulo}, {e.Autor}");
-                            }
-                        }
-                        else
-                        {
-                            Console.WriteLine("No hay ningun libro en la biblioteca");
-                        }
-                break;
-                case 3:
-                       if(B1.ListaSocios.Count > 0)
-                        {
-                            for(int i = 0; i < B1.ListaSocios.Count; i++)
-                            {
-                                Socio s = (Socio)B1.ListaSocios[i];
-                                Console.WriteLine($"Estos son los socios, DNI: {s.Dni},  Nombre y Apellido: {s.NombreApellido}");
-                            }
-                        }
-                        else
-                        {
-                            Console.WriteLine("No hay socios");
-                        }
-                break;
-                default:
-                break;
-            }
+   
+}
             
+        
         }
-    }
+        public static void MostrarMenu()
+        {
+           Console.WriteLine("--- Menú Principal ---");
+           Console.WriteLine("1. Agregar socio");
+           Console.WriteLine("2. Eliminar Socio");
+           Console.WriteLine("3. Agregar libro");
+           Console.WriteLine("4. Eliminar libro");
+           Console.WriteLine("5. Prestar libro");
+           Console.WriteLine("6. Devolver libro");
+           Console.WriteLine("7. Submenú");
+           Console.WriteLine("8. Salir");
+           Console.Write("Seleccione una opción: ");
+        }
+        public static bool EsNombreValido(string texto)
+        {
+            var regex = new Regex(@"^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ\s]+$");
+            return regex.IsMatch(texto);
+        }
+        public static bool EsTextoLibreValido(string texto)
+        {
+            var regex = new Regex(@"^[\w\sáéíóúÁÉÍÓÚüÜñÑ.,:;()\-']+$");
+            return regex.IsMatch(texto);
+        }
+        public static bool EsNumeroValido(string texto, int longitudMin = 1, int longitudMax = 10)
+        {
+            return texto.All(char.IsDigit) && texto.Length >= longitudMin && texto.Length <= longitudMax;
+        }
+    }   
 }
         
         

@@ -49,7 +49,7 @@ namespace Biblioteca
             bool tieneFecha = false;
             
         
-            if (lib.NDni != 0 && lib.Estado == "prestado")
+            if (lib.NDni != "0" && lib.Estado == "prestado")
             {
                 throw new PrestamoException("El libro ya está prestado a otro socio.");
             }

@@ -10,15 +10,15 @@ namespace Biblioteca
     {
         // Variables de instancia --> atributos de la instancia // carácteristicas.
         protected string nombreApellido;
-        protected int dni;
-        protected int telefono;
+        protected string dni;
+        protected string telefono;
         protected string direccion;
         protected int cantLibros;
         protected ArrayList historial;
 
         // Constructor --> Este método es importante, ya que, crea la instancia del objeto, con sus valores
         //                 es la famosa llamada al new - nombre de la clase- ();
-         public Socio(string nombreApellido, int dni, int telefono, string direccion, int cantLibros)
+         public Socio(string nombreApellido, string dni, string telefono, string direccion, int cantLibros)
          {
             this.nombreApellido = nombreApellido;
             this.dni = dni;
@@ -36,7 +36,7 @@ namespace Biblioteca
                 registro.Estado = "disponible";
                 registro.FechaPrestamo = DateTime.MinValue;
                 registro.FechaDevolucion = DateTime.MinValue;
-                registro.NDni = 0;
+                registro.NDni = "0";
                 Console.WriteLine($"Perfecto, el libro: {registro.Titulo} quedo con dni: {registro.NDni} y fechas: {registro.FechaPrestamo} y {registro.FechaDevolucion}");
                 Console.WriteLine($"El socio quedo con: {cantLibros} cantidad de libros");
             }
@@ -60,7 +60,7 @@ namespace Biblioteca
                 nombreApellido = value;
             }
         }
-        public int Dni
+        public string Dni
         {
             get{
                 return dni;
@@ -69,7 +69,7 @@ namespace Biblioteca
                 dni = value;
             }
         }
-         public int Telefono
+         public string Telefono
          {
              get{
                   return telefono;

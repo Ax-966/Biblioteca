@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/brosoft/Imágenes/Biblioteca-BackUp/Biblioteca.csproj",
+      "projectUniqueName": "/home/brosoft/Documentos/Estudios/C#/CopiaBiblioteca/Biblioteca.csproj",
       "projectName": "Biblioteca",
-      "projectPath": "/home/brosoft/Imágenes/Biblioteca-BackUp/Biblioteca.csproj",
+      "projectPath": "/home/brosoft/Documentos/Estudios/C#/CopiaBiblioteca/Biblioteca.csproj",
       "packagesPath": "/home/brosoft/.nuget/packages/",
-      "outputPath": "/home/brosoft/Imágenes/Biblioteca-BackUp/obj/",
+      "outputPath": "/home/brosoft/Documentos/Estudios/C#/CopiaBiblioteca/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/home/brosoft/.nuget/NuGet/NuGet.Config"
@@ -64,7 +64,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/8.0.300/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/home/brosoft/dotnet8/sdk/8.0.405/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

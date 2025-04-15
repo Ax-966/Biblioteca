@@ -11,7 +11,7 @@ namespace Biblioteca
         private int sala;
 
 
-        public SocioLector(string nombreApellido, int dni, int telefono, string direccion, int cantLibros, int sala):base(nombreApellido, dni, telefono, direccion, cantLibros)
+        public SocioLector(string nombreApellido, string dni, string telefono, string direccion, int cantLibros, int sala):base(nombreApellido, dni, telefono, direccion, cantLibros)
         {
             this.sala = 0;
       
@@ -28,7 +28,7 @@ namespace Biblioteca
             registro.Estado = "disponible";
             registro.FechaPrestamo = DateTime.MinValue;
             registro.FechaDevolucion = DateTime.MinValue;
-            registro.NDni = 0;
+            registro.NDni = "0";
             sala = 0; // El lector se retira de la sala
             Console.WriteLine($"Perfecto, el socio lector devolvió el libro y se retiró de la sala.");
         }
@@ -40,7 +40,7 @@ namespace Biblioteca
             registro.Estado = "disponible";
             registro.FechaPrestamo = DateTime.MinValue;
             registro.FechaDevolucion = DateTime.MinValue;
-            registro.NDni = 0;
+            registro.NDni = "0";
             Console.WriteLine($"Perfecto, el libro: {registro.Titulo} fue devuelto correctamente.");
             }
             else // Fuera del período permitido

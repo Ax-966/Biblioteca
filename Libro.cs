@@ -12,7 +12,7 @@ namespace Biblioteca
         protected string autor;
         protected string editorial;
         protected string estado;
-        protected int nDni;
+        protected string nDni;
         protected DateTime fechaPrestamo;
         protected DateTime fechaDevolucion;
         protected string condicion;
@@ -24,7 +24,7 @@ namespace Biblioteca
             this.autor = autor;
             this.editorial = editorial;
             this.estado = "disponible";
-            this.nDni = 0;
+            this.nDni = "0";
             this.fechaPrestamo = DateTime.MinValue;
             this.fechaDevolucion = DateTime.MinValue;
             this.condicion = condicion;
@@ -84,7 +84,7 @@ namespace Biblioteca
                 estado = value;
             }
         }
-        public int NDni
+        public string NDni
         {
             get
             {
