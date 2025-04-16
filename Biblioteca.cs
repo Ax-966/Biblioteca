@@ -141,7 +141,42 @@ namespace Biblioteca
                      Console.WriteLine($"Fecha de devolución: {fd:yyyy-MM-dd}");
             }
             }}}
+            public void BuscarSocio(string dni)
+            {
+                Socio s = null;
+                if(listaSocios != null && listaSocios.Count > 0)
+                {   for(int i = 0; i < listaSocios.Count; i++)
+                    {
+                        s = (Socio)listaSocios[i];
 
+                        if(s.Dni == dni)
+                        {
+                            Console.WriteLine($"El socio es: {s.NombreApellido}");    
+
+                            if(s.Historial != null && s.Historial.Count >0)
+                            {
+                                Console.WriteLine("Este es su historial de libros: ");
+                                for(int j = 0; j < s.Historial.Count; j++)
+                                {
+                                    Ejemplar historial =(Ejemplar)s.Historial[j];
+                                    Console.WriteLine(historial);
+                                }
+                            }
+                           
+                            
+                        }
+                        else
+                        {
+                            Console.WriteLine("El dni ingresado no pertenece a ningún socio de la biblioteca");
+                        }
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("No hay socios");
+                }
+                
+            }
       
             
 

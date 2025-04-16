@@ -147,6 +147,22 @@ namespace Biblioteca
                             
                             break;
                          case 7:
+                            int opcionSub;
+
+                            do
+                            {
+                                MostrarSubMenu();
+                                if (int.TryParse(Console.ReadLine(), out opcionSub))
+                                {
+                                    switch(opcionSub)
+                                    {
+                                        case 1:
+                                            dni =  InputHelper.PedirTextoValido("Ingrese su DNI:", x => EsNumeroValido(x, 7, 8));
+                                            B1.BuscarSocio(dni);
+                                            break;
+                                    }
+                                }
+                            }while (opcionSub != 5);
                             
                             break;
                          case 8:
@@ -546,6 +562,16 @@ while (resD == "si")
            Console.WriteLine("6. Devolver libro");
            Console.WriteLine("7. Submenú");
            Console.WriteLine("8. Salir");
+           Console.Write("Seleccione una opción: ");
+        }
+         public static void MostrarSubMenu()
+        {
+           Console.WriteLine("--- Submenú ---");
+           Console.WriteLine("1. Buscar socio");
+           Console.WriteLine("2. Lista de socios");
+           Console.WriteLine("3. Buscar libro");
+           Console.WriteLine("4. Lista de libros");
+           Console.WriteLine("5. Salir");
            Console.Write("Seleccione una opción: ");
         }
         public static bool EsNombreValido(string texto)
