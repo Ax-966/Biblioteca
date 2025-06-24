@@ -8,18 +8,14 @@ namespace Biblioteca
 {
     public class Socio
     {
-        // Variables de instancia --> atributos de la instancia // carácteristicas.
         protected string nombreApellido;
         protected string dni;
         protected string telefono;
         protected string direccion;
         protected int cantLibros;
         protected ArrayList historial;
-
-        // Constructor --> Este método es importante, ya que, crea la instancia del objeto, con sus valores
-        //                 es la famosa llamada al new - nombre de la clase- ();
-         public Socio(string nombreApellido, string dni, string telefono, string direccion, int cantLibros)
-         {
+        public Socio(string nombreApellido, string dni, string telefono, string direccion, int cantLibros)
+        {
             this.nombreApellido = nombreApellido;
             this.dni = dni;
             this.telefono = telefono;
@@ -46,11 +42,6 @@ namespace Biblioteca
                 Console.WriteLine($"Todavía faltan: {faltan}, para devolver el libro");
             }
         }
-
-    // Si no se encuentra el libro
-
-        
-        // Propiedades --get --> lectura y set --valor--
         public string NombreApellido
         {
             get{
